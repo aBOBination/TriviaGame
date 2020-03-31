@@ -8,6 +8,8 @@ var trivia = {
 
     time : 30,
 
+    count : 0,
+
     questions : [
         {
             question : "What is the best color?",
@@ -24,17 +26,33 @@ var trivia = {
             correct : "Green",
             multipleChoice : ["Red", "Yellow", "Orange"]
         }
-    ]
+    ],
 
     // Methods
 
-    // start : loads and resets questions
+    displayNext : function() {
+        // check count
+        // clear question-container
+        // create divs for counter, question, answers
+        // show next question in questions list
+        // start countdown
+    },
 
-    // buildQuestion
-
-    // 
-
-
+    displayCounter : function() {
+        // set time to 30
+        // update time-- interval
+        // if time === 0 then shows answer next question
+    }
 }
 
-// 
+// start button on click event
+$(".start").on("click", function() {
+    // display next question
+});
+
+// quess on click event
+$(".choice").on("click", function() {
+    // check if correct
+    // if yes, show answer and next question
+    // if no, show answer and next question
+});
