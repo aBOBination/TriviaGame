@@ -5,13 +5,9 @@ var trivia = {
 
     wrong : 0,
 
-    clockRunning : false,
-
-    // intervalId : setInterval(count, 1000),
-
-    time : 30,
-
     questionIndex : 0,
+
+    answer : null,
 
     questions : [
         {
@@ -36,26 +32,12 @@ var trivia = {
     displayNext : function() {
         
         var currentQuestion = this.questions[this.questionIndex].question
-        var answer = this.questions[this.questionIndex].answer
+        this.answer = this.questions[this.questionIndex].answer
         var multipleChoice = this.questions[this.questionIndex].multipleChoice
-        // delete below when done
-        console.log(currentQuestion)
-        console.log(multipleChoice)
-        console.log(answer)
-        if(multipleChoice.includes(answer)) {
-            console.log(true)
-        } else {
-            console.log(false)
-        }
-        console.log("------")
-        // delete above when done
-        // clear question-container
         $(".question-container").empty()
-        // create divs for counter, question, answers
-        var displayTimer = $("<div>").addClass("timer").text("30")
+        var displayTimer = $("<div>").addClass("timer").text("15")
         var displayQuestion = $("<div>").addClass("question").attr("questionIndex", this.questionIndex).text(currentQuestion)
         var displayChoices = $("<div>").addClass("multiple-choice")
-
         $(".question-container").append(displayTimer, displayQuestion, displayChoices)
         for(var i = 0; i < multipleChoice.length; i++) {
             var choice = $("<button>")
@@ -64,22 +46,11 @@ var trivia = {
                 .text(multipleChoice[i])
             $(".multiple-choice").append(choice)
         }
-        // show next question in questions list
-        // start countdown
         countDown.reset()
-        // check count
-        if(this.questionIndex === this.questions.length - 1) {
-            this.questionIndex = 0;
-        } else {
-            this.questionIndex++
-        }
     },
     onClick : function() {
         $(".choice").on("click", function() {
             trivia.guess($(this))
-            // check if correct
-            // if yes, show answer and next question
-            // if no, show answer and next question
         });
     },
 
@@ -90,23 +61,43 @@ var trivia = {
         if(guess === answer) {
             console.log(true)
             this.correct++
-            $(".multiple-choice").empty().text("You are correct!")
-            countDown.stop()
-            setTimeout(function(){ 
-                trivia.displayNext()
-                trivia.onClick()
-                countDown.start()
-             }, 3000);
+            $(".multiple-choice").empty().text("You are correct! " + this.answer)
+            if(this.questionIndex === this.questions.length - 1) {
+                this.questionIndex = 0;
+                countDown.stop()
+                setTimeout(function(){ 
+                    alert("you are done.")
+                    trivia.onClick()
+                }, 2000);
+            } else {
+                this.questionIndex++
+                countDown.stop()
+                setTimeout(function(){ 
+                    trivia.displayNext()
+                    trivia.onClick()
+                    countDown.start()
+                }, 2000);
+            }
+            
         } else {
             this.wrong++
-            $(".multiple-choice").empty().text("You are wrong!")
-            countDown.stop()
-            setTimeout(function(){ 
-                trivia.displayNext()
-                trivia.onClick()
-                countDown.start()
-             }, 3000);
-            console.log(false)
+            $(".multiple-choice").empty().text("You are wrong! " + this.answer)
+            if(this.questionIndex === this.questions.length - 1) {
+                this.questionIndex = 0;
+                countDown.stop()
+                setTimeout(function(){ 
+                    alert("you are done.")
+                    trivia.onClick()
+                }, 2000);
+            } else {
+                this.questionIndex++
+                countDown.stop()
+                setTimeout(function(){ 
+                    trivia.displayNext()
+                    trivia.onClick()
+                    countDown.start()
+                }, 2000);
+            }
         }
     },
 
@@ -118,11 +109,11 @@ var countDown = {
 
     clockRunning : false,
 
-    time : 5,
+    time : 15,
 
     reset: function() {
-        countDown.time = 5;
-        $(".timer").text("30");
+        countDown.time = 15;
+        $(".timer").text("15");
       },
 
     start: function() {
@@ -143,14 +134,23 @@ var countDown = {
         $(".timer").text(countDown.time);
         if(countDown.time === 0) {
             trivia.wrong++
-            $(".multiple-choice").empty().text("You ran out of time")
-            countDown.stop()
-            setTimeout(function(){ 
-                trivia.displayNext()
-                trivia.onClick()
-                countDown.start()
-             }, 3000);
-            
+            $(".multiple-choice").empty().text("You ran out of time the answer was "+ "<br/>" + trivia.answer)
+            if(trivia.questionIndex === trivia.questions.length - 1) {
+                trivia.questionIndex = 0;
+                countDown.stop()
+                setTimeout(function(){ 
+                    alert("you are done.")
+                    trivia.onClick()
+                }, 2000);
+            } else {
+                trivia.questionIndex++
+                countDown.stop()
+                setTimeout(function(){ 
+                    trivia.displayNext()
+                    trivia.onClick()
+                    countDown.start()
+                }, 2000);
+            }            
         }
     }
 }
