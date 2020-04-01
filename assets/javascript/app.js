@@ -104,7 +104,7 @@ var trivia = {
                 setTimeout(function(){
                     trivia.displayNext()
                     countDown.start() 
-                }, 1000);
+                }, 2000);
             }
 
         } else {
@@ -120,7 +120,7 @@ var trivia = {
                 setTimeout(function(){
                     trivia.displayNext()
                     countDown.start()
-                }, 1000);
+                }, 2000);
             }
         }
     },
@@ -133,7 +133,7 @@ var trivia = {
             var resultsWrong =  $("<div>").addClass("result-data pt-2").text("Wrong: "+trivia.wrong)
             var restart = $("<button>").text("Play again").attr("type", "button").addClass("restart m-5 text-center btn btn-primary")
             $(".question-container").append(results, resultsCorrect, resultsWrong, restart)
-        }, 1000)
+        }, 2000)
     }
 };
 
@@ -174,11 +174,12 @@ var countDown = {
                 trivia.displayResults()
             } else {
                 trivia.questionIndex++
-                countDown.reset()
+                countDown.stop()
                 setTimeout(function(){
                     trivia.displayNext()
                     countDown.reset()
-                }, 1000);
+                    countDown.start()
+                }, 2000);
             }
         }
     }

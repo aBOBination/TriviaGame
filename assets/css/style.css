@@ -67,7 +67,7 @@ header {
 
 .question-container {
     border-radius: 1rem;
-    background-color: #FEF5E6;
+    background-color: 	hsla(38, 92%, 95%, 0.8);
     border: solid #68615B 1px;
 }
 
