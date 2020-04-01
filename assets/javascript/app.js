@@ -1,6 +1,5 @@
 var trivia = {
 
-    // Variables
     correct : 0,
 
     wrong : 0,
@@ -11,33 +10,69 @@ var trivia = {
 
     questions : [
         {
-            question : "Whose mother did we never see played by an actress?",
-            answer : "Beverly's",
-            multipleChoice : ["Geordie's", "Beverly's", "Worf's", "Picard's"]
+            question : "Which of these is another name for dwarves?",
+            answer : "Durin’s Folk",
+            multipleChoice : ["Luthien’s Folk", "The Old Ones", "The Deep Ones", "Durin’s Folk"]
         },
         {
-            question : "Worf hadn't always worn a gold uniform. What colour did he wear in the first season?",
-            answer : "Red",
-            multipleChoice : ["Red", "Blue", "No Uniform", "Black"]
+            question : "What is the name of Galadriel's husband?",
+            answer : "Celeborn",
+            multipleChoice : ["Celebrian", "Celebrimbor", "Celeborn", "Celebrant"]
         },
         {
-            question : "In what season did Riker first appear with his beard?",
-            answer : "Second",
-            multipleChoice : ["First", "Second", "Third", "Fourth"]
+            question : "After Sauron, who held the One Ring?",
+            answer : "Isildur",
+            multipleChoice : ["Elrond", "Isildur", "Gollum", "It fell into a river and was lost"]
+        },
+        {
+            question : "Where is Legolas from?",
+            answer : "Mirkwood",
+            multipleChoice : ["Fangorn Forest", "Rivendell", "Lothlorian", "Mirkwood"]
+        },
+        {
+            question : "What is the name of the Inn where Aragorn meets the Hobbits?",
+            answer : "The Prancing Pony",
+            multipleChoice : ["The Prancing Pony", "The Green Dragon", "The Ivy Bush", "The Golden Perch"]
+        },
+        {
+            question : "What was Gollum's name before he was Gollum?",
+            answer : "Smeagol",
+            multipleChoice : ["Deagol", "Smeagol", "Falco", "Marcho"]
+        },
+        {
+            question : "How many Rings of Power were there?",
+            answer : "20",
+            multipleChoice : ["5", "9", "13", "20"]
+        },
+        {
+            question : "What is the name of Gandalf's horse?",
+            answer : "Shadowfax",
+            multipleChoice : ["Brego", "Shadowmane", "Shadowfax", "Hasufel"]
+        },
+        {
+            question : "The only way to destroy the Ring of Power is to throw it into the fires of _________?",
+            answer : "Mount Doom",
+            multipleChoice : ["Mount Zion", "Mount Doom", "Mount Mordor", "Mount Moria"]
+        },
+        {
+            question : "What is the name of the Ent who carries Pippin and Merry through Fangorn Forest?",
+            answer : "Treebeard",
+            multipleChoice : ["Greybranch", "Quickbeam", "Treebeard", "Skinbark"]
         }
     ],
 
-    // Methods
-
     displayNext : function() {
-
+        // if(this.correct + this.wrong === 3) {
+        //     this.correct = 0
+        //     this.wrong = 0
+        // }
         var currentQuestion = this.questions[this.questionIndex].question
         this.answer = this.questions[this.questionIndex].answer
         var multipleChoice = this.questions[this.questionIndex].multipleChoice
         $(".question-container").empty()
-        var displayTimer = $("<div>").addClass("timer").text("15")
+        var displayTimer = $("<div>").addClass("timer mt-2 mb-2").text("15")
         var displayQuestion = $("<div>").addClass("question").attr("questionIndex", this.questionIndex).text(currentQuestion)
-        var displayChoices = $("<div>").addClass("multiple-choice")
+        var displayChoices = $("<div>").addClass("multiple-choice mt-2 mb-5")
         $(".question-container").append(displayTimer, displayQuestion, displayChoices)
         for(var i = 0; i < multipleChoice.length; i++) {
             var choice = $("<button>")
@@ -48,13 +83,13 @@ var trivia = {
         }
         countDown.reset()
     },
-    onClick : function() {
-        $(".choice").on("click", function() {
-            trivia.guess($(this))
-        });
-    },
 
     guess : function(click) {
+        if(this.questionIndex === this.questions.length - 1) {
+            countDown.stop()
+        } else {
+            countDown.start()
+        }
         var guess = click.text()
         var clickIndex = click.attr("questionIndex");
         var answer = this.questions[clickIndex].answer
@@ -68,22 +103,19 @@ var trivia = {
                 setTimeout(function(){
                     $(".question-container").empty()
                     var results = $("<div>").text("Here are your results!")
-                    var resultsCorrect =  $("<div>").text(trivia.correct)
-                    var resultsWrong =  $("<div>").text(trivia.wrong)
+                    var resultsCorrect =  $("<div>").text("Correct: "+trivia.correct)
+                    var resultsWrong =  $("<div>").text("Wrong: "+trivia.wrong)
+                    var restart = $("<button>").text("Play again").attr("type", "button").addClass("restart m-5 text-center btn btn-primary")
                     $(".question-container").append(results)
-                    results.append(resultsCorrect, resultsWrong)
-
-
-                    trivia.onClick()
-                }, 2000);
+                    results.append(resultsCorrect, resultsWrong, restart)
+                }, 1000);
             } else {
                 this.questionIndex++
                 countDown.stop()
                 setTimeout(function(){
                     trivia.displayNext()
-                    trivia.onClick()
                     countDown.start()
-                }, 2000);
+                }, 1000);
             }
 
         } else {
@@ -95,21 +127,19 @@ var trivia = {
                 setTimeout(function(){
                     $(".question-container").empty()
                     var results = $("<div>").text("Here are your results!")
-                    var resultsCorrect =  $("<div>").text(trivia.correct)
-                    var resultsWrong =  $("<div>").text(trivia.wrong)
+                    var resultsCorrect =  $("<div>").text("Correct: "+trivia.correct)
+                    var resultsWrong =  $("<div>").text("Wrong: "+trivia.wrong)
+                    var restart = $("<button>").text("Play again!").attr("type", "button").addClass("restart m-5 text-center btn btn-primary")
                     $(".question-container").append(results)
-                    results.append(resultsCorrect, resultsWrong)
-
-                    trivia.onClick()
-                }, 2000);
+                    results.append(resultsCorrect, resultsWrong, restart)
+                }, 1000);
             } else {
                 this.questionIndex++
                 countDown.stop()
                 setTimeout(function(){
                     trivia.displayNext()
-                    trivia.onClick()
                     countDown.start()
-                }, 2000);
+                }, 1000);
             }
         }
     },
@@ -149,33 +179,44 @@ var countDown = {
             trivia.wrong++
             $(".multiple-choice").empty().text("You ran out of time the answer was "+ "<br/>" + trivia.answer)
             if(trivia.questionIndex === trivia.questions.length - 1) {
+                console.log(trivia.questionIndex)
                 trivia.questionIndex = 0;
                 countDown.stop()
                 setTimeout(function(){
                     $(".question-container").empty()
                     var results = $("<div>").text("Here are your results!")
-                    var resultsCorrect =  $("<div>").text(trivia.correct)
-                    var resultsWrong =  $("<div>").text(trivia.wrong)
+                    var resultsCorrect =  $("<div>").text("Correct: "+trivia.correct)
+                    var resultsWrong =  $("<div>").text("Wrong: "+trivia.wrong)
+                    var restart = $("<button>").text("Play again!").attr("type", "button").addClass("restart m-5 text-center btn btn-primary")
                     $(".question-container").append(results)
-                    results.append(resultsCorrect, resultsWrong)
-                    trivia.onClick()
-                }, 2000);
+                    results.append(resultsCorrect, resultsWrong, restart)
+                }, 1000);
             } else {
                 trivia.questionIndex++
-                countDown.stop()
+                countDown.reset()
                 setTimeout(function(){
                     trivia.displayNext()
-                    trivia.onClick()
-                    countDown.start()
-                }, 2000);
+                    countDown.reset()
+                }, 1000);
             }
         }
     }
 }
 
 // start button on click event
-$(".start").on("click", function() {
-    trivia.displayNext()
-    trivia.onClick()
-    countDown.start()
-});
+$(document).on( "click", ".start", function(){
+    trivia.displayNext();
+    countDown.start();
+} );
+
+$(document).on( "click", ".choice", function(){
+    trivia.guess($(this));
+} );
+
+$(document).on( "click", ".restart", function(){
+    trivia.correct = 0;
+    trivia.wrong = 0;
+    trivia.displayNext();
+    countDown.start();
+} );
+

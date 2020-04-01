@@ -1,0 +1,50 @@
+body {
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    font-family: 'Merienda', cursive;
+}
+
+header {
+    font-family: 'Tangerine', cursive;
+    font-size: 5rem;
+    font-weight: bold;
+    color: #68615B;
+    text-decoration: none;
+    border-bottom: 1px solid #68615B;
+}
+.question {
+    font-size: 2rem;
+}
+
+.start {
+    font-size: 2rem;
+}
+
+.restart {
+    font-size: 2rem;
+    
+}
+
+.btn {
+    border-radius: 1rem;
+    background-color: teal;
+    color: #FEF5E6;
+    border: none;
+}
+
+.btn:hover {
+    background-color: tomato;
+}
+.question-container {
+    border-radius: 1rem;
+    background-color: #FEF5E6;
+    border: solid #68615B 1px;
+}
+
+.timer {
+    font-family: 'Tangerine', cursive;
+    font-size: 4rem;;
+    font-weight: bold;
+}
