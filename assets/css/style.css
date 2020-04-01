@@ -6,6 +6,10 @@ body {
     font-family: 'Merienda', cursive;
 }
 
+.choice {
+    width: 100%;
+}
+
 header {
     font-family: 'Tangerine', cursive;
     font-size: 5rem;
@@ -14,17 +18,39 @@ header {
     text-decoration: none;
     border-bottom: 1px solid #68615B;
 }
-.question {
+
+.multiple-choice {
+    color: #68615B;
     font-size: 2rem;
+}
+
+.question {
+    color: #68615B;
+    font-size: 2rem;
+    border-bottom: 1px solid #68615B;
 }
 
 .start {
     font-size: 2rem;
 }
 
+.results {
+    color: #68615B;
+    font-size: 2rem;
+    margin-top: 2rem;
+    border-bottom: 1px solid #68615B;
+}
+
+.result-data {
+    font-size: 1.5rem;
+}
+
+.result-data {
+    color: #68615B;
+}
+
 .restart {
     font-size: 2rem;
-    
 }
 
 .btn {
@@ -37,6 +63,7 @@ header {
 .btn:hover {
     background-color: tomato;
 }
+
 .question-container {
     border-radius: 1rem;
     background-color: #FEF5E6;
@@ -44,6 +71,7 @@ header {
 }
 
 .timer {
+    color: #68615B;
     font-family: 'Tangerine', cursive;
     font-size: 4rem;;
     font-weight: bold;
