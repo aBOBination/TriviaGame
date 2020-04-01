@@ -18,7 +18,7 @@ var trivia = {
         {
             question : "Worf hadn't always worn a gold uniform. What colour did he wear in the first season?",
             answer : "Red",
-            multipleChoice : ["Red", "Blue", "No Uniform", "Black"]           
+            multipleChoice : ["Red", "Blue", "No Uniform", "Black"]
         },
         {
             question : "In what season did Riker first appear with his beard?",
@@ -30,7 +30,7 @@ var trivia = {
     // Methods
 
     displayNext : function() {
-        
+
         var currentQuestion = this.questions[this.questionIndex].question
         this.answer = this.questions[this.questionIndex].answer
         var multipleChoice = this.questions[this.questionIndex].multipleChoice
@@ -65,34 +65,47 @@ var trivia = {
             if(this.questionIndex === this.questions.length - 1) {
                 this.questionIndex = 0;
                 countDown.stop()
-                setTimeout(function(){ 
-                    alert("you are done.")
+                setTimeout(function(){
+                    $(".question-container").empty()
+                    var results = $("<div>").text("Here are your results!")
+                    var resultsCorrect =  $("<div>").text(trivia.correct)
+                    var resultsWrong =  $("<div>").text(trivia.wrong)
+                    $(".question-container").append(results)
+                    results.append(resultsCorrect, resultsWrong)
+
+
                     trivia.onClick()
                 }, 2000);
             } else {
                 this.questionIndex++
                 countDown.stop()
-                setTimeout(function(){ 
+                setTimeout(function(){
                     trivia.displayNext()
                     trivia.onClick()
                     countDown.start()
                 }, 2000);
             }
-            
+
         } else {
             this.wrong++
             $(".multiple-choice").empty().text("You are wrong! " + this.answer)
             if(this.questionIndex === this.questions.length - 1) {
                 this.questionIndex = 0;
                 countDown.stop()
-                setTimeout(function(){ 
-                    alert("you are done.")
+                setTimeout(function(){
+                    $(".question-container").empty()
+                    var results = $("<div>").text("Here are your results!")
+                    var resultsCorrect =  $("<div>").text(trivia.correct)
+                    var resultsWrong =  $("<div>").text(trivia.wrong)
+                    $(".question-container").append(results)
+                    results.append(resultsCorrect, resultsWrong)
+
                     trivia.onClick()
                 }, 2000);
             } else {
                 this.questionIndex++
                 countDown.stop()
-                setTimeout(function(){ 
+                setTimeout(function(){
                     trivia.displayNext()
                     trivia.onClick()
                     countDown.start()
@@ -127,7 +140,7 @@ var countDown = {
         clearInterval(this.intervalId);
         this.clockRunning = false;
     },
-    
+
     count: function() {
         countDown.time--;
         console.log(countDown.time);
@@ -138,19 +151,24 @@ var countDown = {
             if(trivia.questionIndex === trivia.questions.length - 1) {
                 trivia.questionIndex = 0;
                 countDown.stop()
-                setTimeout(function(){ 
-                    alert("you are done.")
+                setTimeout(function(){
+                    $(".question-container").empty()
+                    var results = $("<div>").text("Here are your results!")
+                    var resultsCorrect =  $("<div>").text(trivia.correct)
+                    var resultsWrong =  $("<div>").text(trivia.wrong)
+                    $(".question-container").append(results)
+                    results.append(resultsCorrect, resultsWrong)
                     trivia.onClick()
                 }, 2000);
             } else {
                 trivia.questionIndex++
                 countDown.stop()
-                setTimeout(function(){ 
+                setTimeout(function(){
                     trivia.displayNext()
                     trivia.onClick()
                     countDown.start()
                 }, 2000);
-            }            
+            }
         }
     }
 }
