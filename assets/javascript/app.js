@@ -67,7 +67,7 @@ var trivia = {
         var multipleChoice = this.questions[this.questionIndex].multipleChoice
         $(".question-container").empty()
         var displayTimer = $("<div>").addClass("timer mt-2 mb-2").text("15")
-        var displayQuestion = $("<div>").addClass("question pb-3").attr("questionIndex", this.questionIndex).text(currentQuestion)
+        var displayQuestion = $("<div>").addClass("question pb-3").attr("questionIndex", this.questionIndex).text( this.questionIndex+1 + ") " + currentQuestion)
         var displayChoices = $("<div>").addClass("multiple-choice pt-3 mt-2 mb-5")
         $(".question-container").append(displayTimer, displayQuestion, displayChoices)
         for(var i = 0; i < multipleChoice.length; i++) {
@@ -92,43 +92,28 @@ var trivia = {
         var clickIndex = click.attr("questionIndex");
         var answer = this.questions[clickIndex].answer
         if(guess === answer) {
-            console.log(true)
             this.correct++
-            $(".multiple-choice").empty().text("You are correct! " + this.answer)
+            $(".multiple-choice").empty().html("You are correct! " + "<br>" + "<u>" + this.answer + "</u>")
             if(this.questionIndex === this.questions.length - 1) {
                 this.questionIndex = 0;
                 countDown.stop()
-                setTimeout(function(){
-                    $(".question-container").empty()
-                    var results = $("<div>").addClass("results pb-2").text("Here are your results!")
-                    var resultsCorrect =  $("<div>").addClass("result-data pt-5").text("Correct: "+trivia.correct)
-                    var resultsWrong =  $("<div>").addClass("result-data pt-2").text("Wrong: "+trivia.wrong)
-                    var restart = $("<button>").text("Play again").attr("type", "button").addClass("restart m-5 text-center btn btn-primary")
-                    $(".question-container").append(results, resultsCorrect, resultsWrong, restart)
-                }, 1000);
+                trivia.displayResults()
             } else {
                 this.questionIndex++
                 countDown.stop()
                 setTimeout(function(){
                     trivia.displayNext()
-                    countDown.start()
+                    countDown.start() 
                 }, 1000);
             }
 
         } else {
             this.wrong++
-            $(".multiple-choice").empty().text("You are wrong! " + this.answer)
+            $(".multiple-choice").empty().html("You are wrong! " + "<br>" + "<u>" + this.answer + "</u>")
             if(this.questionIndex === this.questions.length - 1) {
                 this.questionIndex = 0;
                 countDown.stop()
-                setTimeout(function(){
-                    $(".question-container").empty()
-                    var results = $("<div>").addClass("results pb-2").text("Here are your results!")
-                    var resultsCorrect =  $("<div>").addClass("result-data pt-5").text("Correct: "+trivia.correct)
-                    var resultsWrong =  $("<div>").addClass("result-data pt-2").text("Wrong: "+trivia.wrong)
-                    var restart = $("<button>").text("Play again").attr("type", "button").addClass("restart m-5 text-center btn btn-primary")
-                    $(".question-container").append(results, resultsCorrect, resultsWrong, restart)
-                }, 1000);
+                trivia.displayResults()
             } else {
                 this.questionIndex++
                 countDown.stop()
@@ -140,6 +125,16 @@ var trivia = {
         }
     },
 
+    displayResults : function () {
+        setTimeout(function(){
+            $(".question-container").empty()
+            var results = $("<div>").addClass("results pb-2").text("Here are your results!")
+            var resultsCorrect =  $("<div>").addClass("result-data pt-5").text("Correct: "+trivia.correct)
+            var resultsWrong =  $("<div>").addClass("result-data pt-2").text("Wrong: "+trivia.wrong)
+            var restart = $("<button>").text("Play again").attr("type", "button").addClass("restart m-5 text-center btn btn-primary")
+            $(".question-container").append(results, resultsCorrect, resultsWrong, restart)
+        }, 1000)
+    }
 };
 
 var countDown = {
@@ -169,23 +164,14 @@ var countDown = {
 
     count: function() {
         countDown.time--;
-        console.log(countDown.time);
         $(".timer").text(countDown.time);
         if(countDown.time === 0) {
             trivia.wrong++
-            $(".multiple-choice").empty().text("You ran out of time the answer was "+ "<br/>" + trivia.answer)
+            $(".multiple-choice").empty().html("Time is up!" + "<br>" + "<u>" + trivia.answer + "</u>")
             if(trivia.questionIndex === trivia.questions.length - 1) {
-                console.log(trivia.questionIndex)
                 trivia.questionIndex = 0;
                 countDown.stop()
-                setTimeout(function(){
-                    $(".question-container").empty()
-                    var results = $("<div>").addClass("results pb-2").text("Here are your results!")
-                    var resultsCorrect =  $("<div>").addClass("result-data pt-5").text("Correct: "+trivia.correct)
-                    var resultsWrong =  $("<div>").addClass("result-data pt-2").text("Wrong: "+trivia.wrong)
-                    var restart = $("<button>").text("Play again").attr("type", "button").addClass("restart m-5 text-center btn btn-primary")
-                    $(".question-container").append(results, resultsCorrect, resultsWrong, restart)
-                }, 1000);
+                trivia.displayResults()
             } else {
                 trivia.questionIndex++
                 countDown.reset()

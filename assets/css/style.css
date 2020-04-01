@@ -14,6 +14,7 @@ header {
     font-family: 'Tangerine', cursive;
     font-size: 5rem;
     font-weight: bold;
+    text-shadow:5px 5px 10px teal;
     color: #68615B;
     text-decoration: none;
     border-bottom: 1px solid #68615B;
@@ -71,8 +72,9 @@ header {
 }
 
 .timer {
-    color: #68615B;
+    color: tomato;
     font-family: 'Tangerine', cursive;
     font-size: 4rem;;
-    font-weight: bold;
+    font-weight: bolder;
+    text-shadow:5px 5px 10px tomato;
 }
